@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -std=c++0x -Wall
+CFLAGS = -std=c++11 -Wall
 
 bspwmtobar: bspwmtobar.o
 	$(CC) $(CFLAGS) bspwmtobar.o -o bspwmtobar
