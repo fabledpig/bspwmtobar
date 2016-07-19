@@ -1,3 +1,4 @@
+https://travis-ci.org/fabledpig/bspwmtobar.svg?branch=master
 #bspwmtobar#
 Redirect the neccessary information to /tmp/bspwm-fifo, and put it on lemonboy's bar.
 
