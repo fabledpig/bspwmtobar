@@ -1,4 +1,4 @@
-CXX = clang++
+CXX = g++
 CXXFLAGS = -std=c++11 -Wall
 
 bspwmtobar: bspwmtobar.o
