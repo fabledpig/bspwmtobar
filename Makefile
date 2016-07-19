@@ -1,11 +1,11 @@
-CC = clang++
-CFLAGS = -std=c++11 -Wall
+CXX = clang++
+CXXFLAGS = -std=c++11 -Wall
 
 bspwmtobar: bspwmtobar.o
-	$(CC) $(CFLAGS) bspwmtobar.o -o bspwmtobar
+	$(CXX) $(CXXFLAGS) bspwmtobar.o -o bspwmtobar
 
 bspwmtobar.o: bspwmtobar.cpp
-	$(CC) $(CFLAGS) -c bspwmtobar.cpp
+	$(CXX) $(CXXFLAGS) -c bspwmtobar.cpp
 
 install: bspwmtobar
 	install -D -m 755  bspwmtobar /usr/bin/bspwmtobar
