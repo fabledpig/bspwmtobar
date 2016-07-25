@@ -100,9 +100,9 @@ int main(int argc, char * argv[])
 			std::size_t n = countDesktops(tokens);
 			Desktop* desktops = getDesktops(tokens, n);
 
-			char layout = tokens[n + 1][1];
+			//char layout = tokens[n + 1][1];
 
-			for(int i = 0; i < n; i++)
+			for(unsigned int i = 0; i < n; i++)
 			{
 				std::string color;
 
@@ -184,7 +184,7 @@ Desktop* getDesktops(std::vector<std::string> &tokens, std::size_t n)
 {
 	Desktop* desktops = new Desktop[n];
 
-	for(int i = 0; i < n; i++)
+	for(unsigned int i = 0; i < n; i++)
 	{
 		switch(tokens[i + 1][0])
 		{
