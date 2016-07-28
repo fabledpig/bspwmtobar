@@ -96,7 +96,7 @@ int main(int argc, char * argv[])
 		if(prefix == 'W')
 		{
 			std::vector<std::string> tokens = splitStringIntoTokens(buffer, ':');
-		
+
 			std::size_t n = countDesktops(tokens);
 			Desktop* desktops = getDesktops(tokens, n);
 
@@ -112,7 +112,7 @@ int main(int argc, char * argv[])
 					color = colorHasWindow;
 				else
 					color = colorNormal;
-	
+
 				textss << "%{F" << color << "}" << desktops[i].name << "%{F-} ";
 			}
 		}
@@ -124,13 +124,9 @@ int main(int argc, char * argv[])
 		}
 
 		for(Element &element : elements)
-		{
 			if(element.prefix == prefix)
-			{
 				element.text = textss.str();
-			}
-		}
-		
+
 		printElements(elements);
 	}
 
@@ -145,35 +141,23 @@ void printElements(std::vector<Element> elements)
 	textss << "%{l}";
 
 	for(Element &element : elements)
-	{
 		if(element.pos == 'l')
-		{
 			textss << element.text << " ";
-		}
-	}
 
 	textss << "%{c}";
 
 	for(Element &element : elements)
-	{
 		if(element.pos == 'c')
-		{
 			textss << element.text << " ";
-		}
-	}
 
 	textss << "%{r}";
 
 	for(Element &element : elements)
-	{
 		if(element.pos == 'r')
-		{
 			textss << element.text << " ";
-		}
-	}
 
 	std::string text = textss.str();
-	
+
 	if(text[text.size() - 1] == ' ')
 		text.pop_back();
 
