@@ -21,7 +21,7 @@ typedef struct
 std::vector<std::string> splitStringIntoTokens(std::string &str, char c);
 std::size_t countDesktops(std::vector<std::string> &tokens);
 Desktop* getDesktops(std::vector<std::string> &tokens, std::size_t n);
-void printElements(std::vector<Element> elements);
+void printElements(std::vector<Element>& elements);
 void eraseStringTillCharacter(std::string &str, char c);
 
 std::string colorActive = "#FFFF0000";
@@ -135,7 +135,7 @@ int main(int argc, char * argv[])
 	return 0;
 }
 
-void printElements(std::vector<Element> elements)
+void printElements(std::vector<Element>& elements)
 {
 	std::stringstream textss;
 	textss << "%{l}";
