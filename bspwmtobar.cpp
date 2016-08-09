@@ -137,7 +137,7 @@ int main(int argc, char * argv[])
 	return 0;
 }
 
-void printElements(std::vector<Element>& elements)
+void printElements(std::vector<Element> &elements)
 {
 	std::stringstream textss;
 	textss << "%{l}";
