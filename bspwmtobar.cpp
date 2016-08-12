@@ -18,10 +18,10 @@ typedef struct
 	std::string text;
 } Element;
 
-std::vector<std::string> splitStringIntoTokens(std::string &str, char c);
-std::size_t countDesktops(std::vector<std::string> &tokens);
-Desktop* getDesktops(std::vector<std::string> &tokens, std::size_t n);
-void printElements(std::vector<Element> &elements);
+std::vector<std::string> splitStringIntoTokens(const std::string &str, char c);
+std::size_t countDesktops(const std::vector<std::string> &tokens);
+Desktop* getDesktops(const std::vector<std::string> &tokens, std::size_t n);
+void printElements(const std::vector<Element> &elements);
 void eraseStringTillCharacter(std::string &str, char c);
 
 std::string colorActive = "#FFFF0000";
@@ -137,24 +137,24 @@ int main(int argc, char * argv[])
 	return 0;
 }
 
-void printElements(std::vector<Element> &elements)
+void printElements(const std::vector<Element> &elements)
 {
 	std::stringstream textss;
 	textss << "%{l}";
 
-	for(Element &element : elements)
+	for(const Element &element : elements)
 		if(element.pos == 'l')
 			textss << element.text << " ";
 
 	textss << "%{c}";
 
-	for(Element &element : elements)
+	for(const Element &element : elements)
 		if(element.pos == 'c')
 			textss << element.text << " ";
 
 	textss << "%{r}";
 
-	for(Element &element : elements)
+	for(const Element &element : elements)
 		if(element.pos == 'r')
 			textss << element.text << " ";
 
@@ -166,7 +166,7 @@ void printElements(std::vector<Element> &elements)
 	std::cout << text << std::endl;
 }
 
-Desktop* getDesktops(std::vector<std::string> &tokens, std::size_t n)
+Desktop* getDesktops(const std::vector<std::string> &tokens, std::size_t n)
 {
 	Desktop* desktops = new Desktop[n];
 
@@ -198,11 +198,11 @@ Desktop* getDesktops(std::vector<std::string> &tokens, std::size_t n)
 	return desktops;
 }
 
-std::size_t countDesktops(std::vector<std::string> &tokens)
+std::size_t countDesktops(const std::vector<std::string> &tokens)
 {
 	std::size_t n = 0;
 
-	for(std::string &token : tokens)
+	for(const std::string &token : tokens)
 	{
 		switch(token[0])
 		{
@@ -226,7 +226,7 @@ void eraseStringTillCharacter(std::string &str, char c)
 		str.erase(0, pos + 1);
 }
 
-std::vector<std::string> splitStringIntoTokens(std::string &str, char c)
+std::vector<std::string> splitStringIntoTokens(const std::string &str, char c)
 {
 	std::vector<std::string> tokens;
 	std::size_t pos = -1;
