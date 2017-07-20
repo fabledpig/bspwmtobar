@@ -3,56 +3,71 @@
 
 #include "desktop.h"
 
-void add_desktop(desktop_list dl, desktop *d)
+unsigned int count_desktops(const char *bspwm_output)
 {
-	d->next = NULL;
+	const char types[] = "OoFfUu"; //desktop type specifiers
 
-	if(dl == NULL) {
-		dl = d;
-		return;
-	}
+	unsigned int cnt = 0;
+	for(char *pch = strpbrk(bspwm_output, types); pch != NULL; pch = strpbrk(pch + 1, types), ++cnt);
 
-	desktop *i;
-	for(i = dl; i->next != NULL; i = i->next);
-
-	i->next = d;
+	return cnt;
 }
 
-void remove_last(desktop_list dl)
+void build_desktop_array(const char *bspwm_output, desktop **desktop_array, unsigned int *size)
 {
-	if(dl == NULL)
-		return;
+	unsigned int new_size = count_desktops(bspwm_output);
 
-	if(dl->next == NULL) {
-		dl = NULL;
-		return;
+	//if desktop_array hasn't been built yet, or the number of desktops has changed
+	if(*desktop_array == NULL || *size != new_size) {
+		if(*desktop_array != NULL) {
+			for(unsigned int i = 0; i < *size; ++i)
+				free((*desktop_array)[i].name);
+
+			free(*desktop_array);
+		}
+
+		*size = new_size;
+		*desktop_array = malloc(sizeof(desktop) * new_size);
 	}
 
-	desktop *i;
-	for(i = dl; i->next->next != NULL; i = i->next);
+	//gets info describing desktops from bspwm_output
+	char **desktop_info = get_desktop_info(bspwm_output);
 
-	free(i->next);
-	i->next = NULL;
+	for(unsigned int i = 0; i < new_size; ++i) {
+		*desktop_array[i] = create_desktop(desktop_info[i]);
+		free(desktop_info[i]);
+	}
+
+	free(desktop_info);
 }
 
-desktop *create_desktop(const char *name, char status)
+char **get_desktop_info(const char *bspwm_output)
 {
-	desktop *d = malloc(sizeof(desktop));
-	d->name = malloc(strlen(name) + 1);
-	strcpy(d->name, name);
-	d->status = status;
-	d->next = NULL;
+	unsigned int num_of_desktops = count_desktops(bspwm_output);
+	char **desktop_info = malloc(sizeof(char *) * num_of_desktops);
+
+	char *tmp = malloc(strlen(bspwm_output));
+	strcpy(tmp, bspwm_output + 1); //we cut down the first character
+
+	char *pch = strtok(tmp, ":");
+	for(; pch != NULL && (pch[0] == 'M' || pch[0] == 'm'); pch = strtok(NULL, ":"));
+
+	for(unsigned int i = 0; i < num_of_desktops; ++i, pch = strtok(NULL, ":")) {
+		desktop_info[i] = malloc(strlen(pch) + 1);
+		strcpy(desktop_info[i], pch);
+	}
+
+	free(tmp);
+
+	return desktop_info;
+}
+
+desktop create_desktop(const char *desktop_info)
+{
+	desktop d;
+	d.status = desktop_info[0];
+	d.name = malloc(strlen(desktop_info));
+	strcpy(d.name, desktop_info + 1);
 
 	return d;
-}
-
-void change_desktop(desktop *d, const char *name, char status)
-{
-	if(strcmp(desktop->name, name)) {
-		free(desktop->name);
-		d->name = malloc(strlen(name) + 1);
-		strcpy(d->name, name);
-	}
-
-	d->status = status;
 }

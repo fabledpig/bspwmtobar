@@ -1,18 +1,17 @@
-#ifdef DESKTOP_H
+#ifndef DESKTOP_H
 #define DESKTOP_H
 
-typedef struct desktop_ {
+typedef struct {
 	char *name;
 	char status;
-	desktop_ *next;
-} desktop, *desktop_list;
+} desktop;
 
-void add_desktop(desktop_list dl, desktop *d);
+unsigned int count_desktops(const char *bspwm_output);
 
-void remove_last(desktop_list dl);
+void build_desktop_array(const char *bspwm_output, desktop **desktop_array, unsigned int *size);
 
-desktop *create_desktop(const char *name, char status);
+char **get_desktop_info(const char *bspwm_output);
 
-void change_desktop(desktop *d, const char *name, char status)
+desktop create_desktop(const char *desktop_info);
 
 #endif
