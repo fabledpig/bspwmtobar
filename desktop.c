@@ -8,7 +8,10 @@ unsigned int count_desktops(const char *bspwm_output)
 	const char types[] = "OoFfUu"; //desktop type specifiers
 
 	unsigned int cnt = 0;
-	for(char *pch = strpbrk(bspwm_output, types); pch != NULL; pch = strpbrk(pch + 1, types), ++cnt);
+	for(int i = 0; i < strlen(bspwm_output); ++i) {
+		if(bspwm_output[i] == ':' && strchr(types, bspwm_output[++i]) != NULL)
+			++cnt;
+	}
 
 	return cnt;
 }
