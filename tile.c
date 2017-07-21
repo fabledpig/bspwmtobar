@@ -6,6 +6,9 @@
 
 #include "tile.h"
 
+desktop *desktop_array = NULL;
+unsigned int desktop_array_size = 0;
+
 //returns true if t1 should be aligned before t2
 int align_left(tile t1, tile t2)
 {
@@ -51,7 +54,8 @@ void update_tile_array(tile *tile_array, unsigned int size, const char *fifo_out
 
 	if(fifo_output[0] == 'W') {
 		prefix = "W";
-		str = desktop_info_to_string(fifo_output);
+		build_desktop_array(fifo_output, &desktop_array, &desktop_array_size);
+		str = desktop_array_to_string(desktop_array, desktop_array_size);
 	} else {
 		if(strchr(fifo_output, ':') == NULL) //invalid format
 			return;
@@ -80,4 +84,8 @@ void free_tile_array(tile *tile_array, unsigned int size)
 		free(tile_array[i].str);
 
 	free(tile_array);
+
+	//gets freed here, as it is decleared in this file
+	free_desktop_array(desktop_array, desktop_array_size);
+	desktop_array = NULL; //just to be sure
 }
