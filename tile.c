@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "desktop.h"
+
 #include "tile.h"
 
 //returns true if t1 should be aligned before t2
@@ -20,14 +22,14 @@ int align_left(tile t1, tile t2)
 }
 
 //we put the elements that are aligned left to the front, thent those that are aligned center etc.
-void sort_tile_array(tile **tile_array, unsigned int size)
+void sort_tile_array(tile *tile_array, unsigned int size)
 {
 	for(unsigned int i = 0; i < size - 1; ++i) {
 		for(unsigned int j = i + 1; j < size; ++j) {
-			if(align_left((*tile_array)[j], (*tile_array)[i])) {
-				tile tmp = (*tile_array)[i];
-				(*tile_array)[i] = (*tile_array)[j];
-				(*tile_array)[j] = tmp;
+			if(align_left(tile_array[j], tile_array[i])) {
+				tile tmp = tile_array[i];
+				tile_array[i] = tile_array[j];
+				tile_array[j] = tmp;
 				break;
 			}
 		}
