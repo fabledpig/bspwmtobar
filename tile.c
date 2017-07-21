@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "tile.h"
 
 //returns true if t1 should be aligned before t2
@@ -28,4 +32,46 @@ void sort_tile_array(tile **tile_array, unsigned int size)
 			}
 		}
 	}
+}
+
+tile create_tile(const char *prefix, char pos)
+{
+	tile t = {.prefix = prefix, .str = NULL, .pos = pos};
+
+	return t;
+}
+
+void update_tile_array(tile *tile_array, unsigned int size, const char *fifo_output)
+{
+	const char *prefix;
+	char *str;
+	char *tmp;
+
+	if(fifo_output[0] == 'W') {
+		prefix = "W";
+		str = desktop_info_to_string(fifo_output);
+	} else {
+		if(strchr(fifo_output, ':') == NULL) //invalid format
+			return;
+
+		tmp = malloc(strlen(fifo_output) + 1);
+		strcpy(tmp, fifo_output);
+		prefix  = strtok(tmp, ":");
+
+		str = malloc(strlen(fifo_output) - strlen(prefix));
+		strcpy(str, fifo_output + strlen(prefix) + 1);
+	}
+
+	for(unsigned int i = 0; i < size; ++i) {
+		if(!strcmp(tile_array[i].prefix, prefix))
+			tile_array[i].str = str;
+	}
+}
+
+void free_tile_array(tile *tile_array, unsigned int size)
+{
+	for(unsigned int i = 0; i < size; ++i)
+		free(tile_array[i].str);
+
+	free(tile_array);
 }
