@@ -65,8 +65,12 @@ void update_tile_array(tile *tile_array, unsigned int size, const char *fifo_out
 	}
 
 	for(unsigned int i = 0; i < size; ++i) {
-		if(!strcmp(tile_array[i].prefix, prefix))
+		if(!strcmp(tile_array[i].prefix, prefix)) {
+			if(tile_array[i].str != NULL)
+				free(tile_array[i].str);
+
 			tile_array[i].str = str;
+		}
 	}
 }
 
