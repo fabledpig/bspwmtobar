@@ -14,4 +14,8 @@ char **get_desktop_info(const char *bspwm_output);
 
 desktop create_desktop(const char *desktop_info);
 
+void free_desktop_array(desktop *desktop_array, unsigned int size);
+		
+char *desktop_array_to_string(desktop *desktop_array, unsigned int size);
+
 #endif

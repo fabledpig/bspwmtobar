@@ -3,6 +3,8 @@
 
 #include "desktop.h"
 
+#define DESKTOP_SIZE 256
+
 unsigned int count_desktops(const char *bspwm_output)
 {
 	const char *types = "OoFfUu"; //desktop type specifiers
@@ -81,4 +83,15 @@ void free_desktop_array(desktop *desktop_array, unsigned int size)
 		free(desktop_array[i].name);
 
 	free(desktop_array);
+}
+
+char *desktop_array_to_string(desktop *desktop_array, unsigned int size)
+{
+	char *str = malloc(DESKTOP_SIZE);
+	str[0] = 0;
+
+	for(unsigned int i = 0; i < size; ++i)
+		strcat(str, desktop_array[i].name);
+
+	return str;
 }
