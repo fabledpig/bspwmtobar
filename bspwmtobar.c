@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 
 	tile *tile_array = malloc(sizeof(tile)); //this part is hardcoded, just for testing
 	unsigned int size = 1;
-	tile_array[0] = create_tile("W", 'c');
+	tile_array[0] = create_tile("test", 'c');
 	sort_tile_array(tile_array, size);
 
 	char buf[BUF_SIZE];
@@ -25,7 +25,8 @@ int main(int argc, char *argv[])
 		buf[bytes_read] = 0;
 		update_tile_array(tile_array, size, buf);
 
-		printf("%s\n", tile_array[0].str);
+		if(tile_array[0].str)
+			printf("%s\n", tile_array[0].str);
 	}
 
 	free_tile_array(tile_array, size);
