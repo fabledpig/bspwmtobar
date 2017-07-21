@@ -20,14 +20,14 @@ void build_desktop_array(const char *bspwm_output, desktop **desktop_array, unsi
 {
 	unsigned int new_size = count_desktops(bspwm_output);
 
-	//if desktop_array hasn't been built yet, or the number of desktops has changed
-	if(*desktop_array == NULL || *size != new_size) {
-		if(*desktop_array != NULL) {
-			for(unsigned int i = 0; i < *size; ++i)
-				free((*desktop_array)[i].name);
+	if(*desktop_array != NULL) {
+		for(unsigned int i = 0; i < *size; ++i)
+			free((*desktop_array)[i].name);
+	}
 
-			free(*desktop_array);
-		}
+	//if desktop_array hasn't been built yet, or the number of desktops has changed
+	if(*size != new_size) {
+		free(*desktop_array);
 
 		*size = new_size;
 		*desktop_array = malloc(sizeof(desktop) * new_size);
@@ -37,7 +37,7 @@ void build_desktop_array(const char *bspwm_output, desktop **desktop_array, unsi
 	char **desktop_info = get_desktop_info(bspwm_output);
 
 	for(unsigned int i = 0; i < new_size; ++i) {
-		*desktop_array[i] = create_desktop(desktop_info[i]);
+		(*desktop_array)[i] = create_desktop(desktop_info[i]);
 		free(desktop_info[i]);
 	}
 
@@ -73,4 +73,12 @@ desktop create_desktop(const char *desktop_info)
 	strcpy(d.name, desktop_info + 1);
 
 	return d;
+}
+
+void free_desktop_array(desktop *desktop_array, unsigned int size)
+{
+	for(unsigned int i = 0; i < size; ++i)
+		free(desktop_array[i].name);
+
+	free(desktop_array);
 }
