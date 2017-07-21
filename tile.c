@@ -50,7 +50,7 @@ void update_tile_array(tile *tile_array, unsigned int size, const char *fifo_out
 {
 	const char *prefix;
 	char *str;
-	char *tmp;
+	char *tmp = NULL;
 
 	if(fifo_output[0] == 'W') {
 		prefix = "W";
@@ -70,12 +70,15 @@ void update_tile_array(tile *tile_array, unsigned int size, const char *fifo_out
 
 	for(unsigned int i = 0; i < size; ++i) {
 		if(!strcmp(tile_array[i].prefix, prefix)) {
-			if(tile_array[i].str != NULL)
+			if(tile_array[i].str)
 				free(tile_array[i].str);
 
 			tile_array[i].str = str;
 		}
 	}
+
+	if(tmp)
+		free(tmp);
 }
 
 void free_tile_array(tile *tile_array, unsigned int size)
