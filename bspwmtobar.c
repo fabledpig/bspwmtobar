@@ -7,6 +7,11 @@
 #include "tile.h"
 
 #define BUF_SIZE 512
+#define COLOR_LENGTH 10
+
+char occupied_color[COLOR_LENGTH], occupied_a_color[COLOR_LENGTH],
+			free_color[COLOR_LENGTH], free_a_color[COLOR_LENGTH],
+			urgent_color[COLOR_LENGTH], urgent_a_color[COLOR_LENGTH];
 
 int main(int argc, char *argv[])
 {
