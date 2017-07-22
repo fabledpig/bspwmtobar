@@ -94,6 +94,8 @@ void free_tile_array(tile *tile_array, unsigned int size)
 	free(tile_array);
 
 	//gets freed here, as it is decleared in this file
-	free_desktop_array(desktop_array, desktop_array_size);
-	desktop_array = NULL; //just to be sure
+	if(desktop_array) {
+		free_desktop_array(desktop_array, desktop_array_size);
+		desktop_array = NULL; //just to be sure
+	}
 }
