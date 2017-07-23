@@ -30,9 +30,9 @@ void sort_tile_array(tile *tile_array, unsigned int size)
 	for(unsigned int i = 0; i < size - 1; ++i) {
 		for(unsigned int j = i + 1; j < size; ++j) {
 			if(align_left(tile_array[j], tile_array[i])) {
-				tile tmp = tile_array[i];
-				tile_array[i] = tile_array[j];
-				tile_array[j] = tmp;
+				tile tmp = tile_array[j];
+				memmove(tile_array + i + 1, tile_array + i, (j - i) * sizeof(tile));
+				tile_array[i] = tmp;
 				break;
 			}
 		}
