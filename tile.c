@@ -76,6 +76,8 @@ void update_tile_array(tile *tile_array, unsigned int size, const char *fifo_out
 
 			found = 1;
 			tile_array[i].str = str;
+
+			break;
 		}
 	}
 
