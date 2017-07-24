@@ -1,9 +1,11 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "desktop.h"
 
 #define DESKTOP_SIZE 256
+#define DESKTOP_BUF_SIZE 64
 
 unsigned int count_desktops(const char *bspwm_output)
 {
@@ -85,13 +87,43 @@ void free_desktop_array(desktop *desktop_array, unsigned int size)
 	free(desktop_array);
 }
 
+const char *select_color(char status)
+{
+	switch(status) {
+		case 'o':
+			return occupied_color;
+			break;
+		case 'O':
+			return occupied_a_color;
+			break;
+		case 'f':
+			return free_color;
+			break;
+		case 'F':
+			return free_a_color;
+			break;
+		case 'u':
+			return urgent_color;
+			break;
+		case 'U':
+			return urgent_a_color;
+			break;
+	}
+
+	return occupied_color;
+}
+
 char *desktop_array_to_string(desktop *desktop_array, unsigned int size)
 {
 	char *str = malloc(DESKTOP_SIZE);
 	str[0] = 0;
 
-	for(unsigned int i = 0; i < size; ++i)
-		strcat(str, desktop_array[i].name);
+	for(unsigned int i = 0; i < size; ++i) {
+		char tmp[DESKTOP_BUF_SIZE];
+		const char *color = select_color(desktop_array[i].status);
+		sprintf(tmp, "%%{F%s}%s%%{F-}", color, desktop_array[i].name);
+		strcat(str, tmp);
+	}
 
 	return str;
 }
