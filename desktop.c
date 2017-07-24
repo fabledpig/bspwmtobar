@@ -27,7 +27,7 @@ void build_desktop_array(const char *bspwm_output, desktop **desktop_array, unsi
 			free((*desktop_array)[i].name);
 	}
 
-	//if desktop_array hasn't been built yet, or the number of desktops has changed
+	//if the number of desktops has changed
 	if(*size != new_size) {
 		free(*desktop_array);
 
