@@ -102,12 +102,12 @@ tile *process_args(int argc, char *argv[], unsigned int *size)
 
 int main(int argc, char *argv[])
 {
+	unsigned int tile_array_size;
+	tile *tile_array = process_args(argc, argv, &tile_array_size);
+
 	const char *fifo_path = "/tmp/bspwmtobar-fifo";
 	mkfifo(fifo_path, 0666);
 	int fd = open(fifo_path, O_RDONLY);
-
-	unsigned int tile_array_size;
-	tile *tile_array = process_args(argc, argv, &tile_array_size);
 
 	sort_tile_array(tile_array, tile_array_size);
 
