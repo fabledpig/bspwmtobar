@@ -87,10 +87,6 @@ void free_desktop_array(desktop *desktop_array, unsigned int size)
 
 char *desktop_array_to_string(desktop *desktop_array, unsigned int size)
 {
-	extern char occupied_color[], occupied_a_color[],
-			free_color[], free_a_color[],
-			urgent_color[], urgent_a_color[];
-
 	char *str = malloc(DESKTOP_SIZE);
 	str[0] = 0;
 
