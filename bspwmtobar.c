@@ -87,7 +87,7 @@ tile *process_args(int argc, char *argv[], unsigned int *size)
 			pos = argv[i][1];
 		else if(at == COLOR_ARG) {
 			if(i >= argc - 1)
-				printf("Error! Not enough arguments!");
+				fprintf(stderr, "Error! Not enough arguments!");
 			else {
 				process_color_arg(argv[i], argv[i + 1]);
 				++i;
