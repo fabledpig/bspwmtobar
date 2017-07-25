@@ -1,16 +1,13 @@
 #ifndef DESKTOP_H
 #define DESKTOP_H
 
-#define COLOR_LENGTH 10
-
 typedef struct {
 	char *name;
 	char status;
 } desktop;
 
-extern char occupied_color[COLOR_LENGTH], occupied_a_color[COLOR_LENGTH],
-			free_color[COLOR_LENGTH], free_a_color[COLOR_LENGTH],
-			urgent_color[COLOR_LENGTH], urgent_a_color[COLOR_LENGTH];
+extern char occupied_color[], occupied_a_color[], free_color[], free_a_color[],
+			urgent_color[], urgent_a_color[];
 
 unsigned int count_desktops(const char *bspwm_output);
 
