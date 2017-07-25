@@ -4,8 +4,8 @@
 
 #include "desktop.h"
 
-#define DESKTOP_SIZE 256
-#define DESKTOP_BUF_SIZE 64
+#define DESKTOP_SIZE 1024
+#define DESKTOP_BUF_SIZE 128
 
 unsigned int count_desktops(const char *bspwm_output)
 {
@@ -121,7 +121,7 @@ char *desktop_array_to_string(desktop *desktop_array, unsigned int size)
 	for(unsigned int i = 0; i < size; ++i) {
 		char tmp[DESKTOP_BUF_SIZE];
 		const char *format = select_format(desktop_array[i].status);
-		sprintf(tmp, "%%{F%s}%s%%{F-}", format, desktop_array[i].name);
+		sprintf(tmp, "%s%s%%{F-}%%{B-}%%{U-}%%{T-}%%{-u}%%{-o}", format, desktop_array[i].name); //reset every formatting that may have happened
 		strcat(str, tmp);
 	}
 
