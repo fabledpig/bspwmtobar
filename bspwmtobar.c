@@ -8,7 +8,7 @@
 #include "tile.h"
 
 #define BUF_SIZE 512
-#define COLOR_LENGTH 10
+#define FORMAT_LENGTH 32
 
 #define ALIGN_LEFT_ARG "-l"
 #define ALIGN_CENTER_ARG "-c"
@@ -20,11 +20,11 @@
 #define UC_ARG "--urgent"
 #define UAC_ARG "--urgent-active"
 
-typedef enum {ALIGN_ARG, COLOR_ARG, MISC} arg_type;
+typedef enum {ALIGN_ARG, FORMAT_ARG, MISC} arg_type;
 
-char occupied_color[COLOR_LENGTH], occupied_a_color[COLOR_LENGTH],
-			free_color[COLOR_LENGTH], free_a_color[COLOR_LENGTH],
-			urgent_color[COLOR_LENGTH], urgent_a_color[COLOR_LENGTH];
+char occupied_format[FORMAT_LENGTH], occupied_a_format[FORMAT_LENGTH],
+			free_format[FORMAT_LENGTH], free_a_format[FORMAT_LENGTH],
+			urgent_format[FORMAT_LENGTH], urgent_a_format[FORMAT_LENGTH];
 
 arg_type get_arg_type(const char *argv)
 {
@@ -38,7 +38,7 @@ arg_type get_arg_type(const char *argv)
 			!strcmp(argv, FAC_ARG) ||
 			!strcmp(argv, UC_ARG) ||
 			!strcmp(argv, UAC_ARG))
-		return COLOR_ARG;
+		return FORMAT_ARG;
 
 	return MISC;
 }
@@ -51,27 +51,27 @@ unsigned int count_necessary_tiles(int argc, char *argv[])
 		arg_type at = get_arg_type(argv[i]);
 		if(at == MISC)
 			++cnt;
-		else if(at == COLOR_ARG)
-			++i; //next one is the color code so we skip it
+		else if(at == FORMAT_ARG)
+			++i; //next one is the format string so we skip it
 	}
 
 	return cnt;
 }
 
-void process_color_arg(const char *color_type, const char *color)
+void process_format_arg(const char *format_type, const char *format)
 {
-	if(!strcmp(color_type, OC_ARG))
-		strcpy(occupied_color, color);
-	else if(!strcmp(color_type, OAC_ARG))
-		strcpy(occupied_a_color, color);
-	else if(!strcmp(color_type, FC_ARG))
-		strcpy(free_color, color);
-	else if(!strcmp(color_type, FAC_ARG))
-		strcpy(free_a_color, color);
-	else if(!strcmp(color_type, UC_ARG))
-		strcpy(urgent_color, color);
-	else if(!strcmp(color_type, UAC_ARG))
-		strcpy(urgent_a_color, color);
+	if(!strcmp(format_type, OC_ARG))
+		strcpy(occupied_format, format);
+	else if(!strcmp(format_type, OAC_ARG))
+		strcpy(occupied_a_format, format);
+	else if(!strcmp(format_type, FC_ARG))
+		strcpy(free_format, format);
+	else if(!strcmp(format_type, FAC_ARG))
+		strcpy(free_a_format, format);
+	else if(!strcmp(format_type, UC_ARG))
+		strcpy(urgent_format, format);
+	else if(!strcmp(format_type, UAC_ARG))
+		strcpy(urgent_a_format, format);
 }
 
 tile *process_args(int argc, char *argv[], unsigned int *size)
@@ -85,11 +85,11 @@ tile *process_args(int argc, char *argv[], unsigned int *size)
 		arg_type at = get_arg_type(argv[i]);
 		if(at == ALIGN_ARG)
 			pos = argv[i][1];
-		else if(at == COLOR_ARG) {
+		else if(at == FORMAT_ARG) {
 			if(i >= argc - 1)
 				fprintf(stderr, "Error! Not enough arguments!");
 			else {
-				process_color_arg(argv[i], argv[i + 1]);
+				process_format_arg(argv[i], argv[i + 1]);
 				++i;
 			}
 		}

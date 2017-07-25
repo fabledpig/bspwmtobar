@@ -6,8 +6,8 @@ typedef struct {
 	char status;
 } desktop;
 
-extern char occupied_color[], occupied_a_color[], free_color[], free_a_color[],
-			urgent_color[], urgent_a_color[];
+extern char occupied_format[], occupied_a_format[], free_format[], free_a_format[],
+			urgent_format[], urgent_a_format[];
 
 unsigned int count_desktops(const char *bspwm_output);
 

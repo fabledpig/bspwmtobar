@@ -87,30 +87,30 @@ void free_desktop_array(desktop *desktop_array, unsigned int size)
 	free(desktop_array);
 }
 
-const char *select_color(char status)
+const char *select_format(char status)
 {
 	switch(status) {
 		case 'o':
-			return occupied_color;
+			return occupied_format;
 			break;
 		case 'O':
-			return occupied_a_color;
+			return occupied_a_format;
 			break;
 		case 'f':
-			return free_color;
+			return free_format;
 			break;
 		case 'F':
-			return free_a_color;
+			return free_a_format;
 			break;
 		case 'u':
-			return urgent_color;
+			return urgent_format;
 			break;
 		case 'U':
-			return urgent_a_color;
+			return urgent_a_format;
 			break;
 	}
 
-	return occupied_color;
+	return occupied_format;
 }
 
 char *desktop_array_to_string(desktop *desktop_array, unsigned int size)
@@ -120,8 +120,8 @@ char *desktop_array_to_string(desktop *desktop_array, unsigned int size)
 
 	for(unsigned int i = 0; i < size; ++i) {
 		char tmp[DESKTOP_BUF_SIZE];
-		const char *color = select_color(desktop_array[i].status);
-		sprintf(tmp, "%%{F%s}%s%%{F-}", color, desktop_array[i].name);
+		const char *format = select_format(desktop_array[i].status);
+		sprintf(tmp, "%%{F%s}%s%%{F-}", format, desktop_array[i].name);
 		strcat(str, tmp);
 	}
 
