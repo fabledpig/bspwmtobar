@@ -74,6 +74,23 @@ void process_format_arg(const char *format_type, const char *format)
 		strcpy(urgent_a_format, format);
 }
 
+void set_empty_format_args(void)
+{
+	if(strlen(free_format) == 0)
+		strcpy(free_format, "%%{F#FFFFFF}");
+	if(strlen(free_a_format) == 0)
+		strcpy(free_a_format, "%%{F#FF0000}");
+
+	if(strlen(occupied_format) == 0)
+		strcpy(occupied_format, free_format);
+	if(strlen(occupied_a_format) == 0)
+		strcpy(occupied_a_format, free_a_format);
+	if(strlen(urgent_format) == 0)
+		strcpy(urgent_format, free_format);
+	if(strlen(urgent_a_format) == 0)
+		strcpy(urgent_a_format, free_a_format);
+}
+
 tile *process_args(int argc, char *argv[], unsigned int *size)
 {
 	*size = count_necessary_tiles(argc, argv);
@@ -96,6 +113,8 @@ tile *process_args(int argc, char *argv[], unsigned int *size)
 		else
 			tile_array[index++] = create_tile(argv[i], pos);
 	}
+
+	set_empty_format_args();
 
 	return tile_array;
 }
