@@ -1,11 +1,17 @@
-CXX = g++
-CXXFLAGS = -std=c++11 -Wall
+CC = gcc
+CFLAGS = -std=c99 -Wall
 
-bspwmtobar: bspwmtobar.o
-	$(CXX) $(CXXFLAGS) bspwmtobar.o -o bspwmtobar
+bspwmtobar: bspwmtobar.o desktop.o tile.o
+	$(CC) $(CFLAGS) bspwmtobar.o desktop.o tile.o -o bspwmtobar
 
-bspwmtobar.o: bspwmtobar.cpp
-	$(CXX) $(CXXFLAGS) -c bspwmtobar.cpp
+bspwmtobar.o: bspwmtobar.c
+	$(CC) $(CFLAGS) -c bspwmtobar.c
+
+desktop.o: desktop.c
+	$(CC) $(CFLAGS) -c desktop.c
+
+tile.o: tile.c
+	$(CC) $(CFLAGS) -c tile.c
 
 install: bspwmtobar
 	install -D -m 755  bspwmtobar /usr/bin/bspwmtobar
