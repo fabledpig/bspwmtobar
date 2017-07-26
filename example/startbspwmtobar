@@ -1,9 +1,9 @@
 #! /bin/sh
-#startbspwmtobar $COLOR_ACTIVE $COLOR_HASWINDOW $COLOR_NORMAL
 
-mkfifo /tmp/bspwm-fifo
-bspc subscribe report > /tmp/bspwm-fifo &
-conky > /tmp/bspwm-fifo &
-xtitle -sf "x:%s" > /tmp/bspwm-fifo &
+trap "kill 0" SIGINT
 
-bspwmtobar -l x -c W -r c --color-active $1 --color-haswindow $2 --color-normal $3 | lemonbar -p -g 1920x30 -f "DejavuSans-10"  -f "FontAwesome-11" -B "#141821" -F "#EDEDED"
+bspwmtobar -l x -c W -r c --free "%{F#FFFFFF}" --free-active "%{F#FF0000}" --occupied "%{F#999999}" | lemonbar -g -b 1920x30 -f &
+
+bspc subscribe report > /tmp/bspwmtobar-fifo &
+conky > /tmp/bspwmtobar-fifo &
+xtitle -sf "x:%s" > /tmp/bspwmtobar-fifo
