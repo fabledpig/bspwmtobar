@@ -143,7 +143,9 @@ int main(int argc, char *argv[])
 	int bytes_read;
 	while((bytes_read = read(fd, buf, BUF_SIZE - 1)) > 0) {
 		buf[bytes_read - 1] = 0; //cut down newline
-		update_tile_array(tile_array, tile_array_size, buf);
+
+		for(char *pch = strtok(buf, "\n"); pch != NULL; pch = strtok(NULL, "\n"))
+			update_tile_array(tile_array, tile_array_size, pch);
 
 		print_tile_array(tile_array, tile_array_size);
 	}
