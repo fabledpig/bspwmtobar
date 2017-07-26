@@ -77,9 +77,9 @@ void process_format_arg(const char *format_type, const char *format)
 void set_empty_format_args(void)
 {
 	if(strlen(free_format) == 0)
-		strcpy(free_format, "%%{F#FFFFFF}");
+		strcpy(free_format, "%{F#FFFFFF}");
 	if(strlen(free_a_format) == 0)
-		strcpy(free_a_format, "%%{F#FF0000}");
+		strcpy(free_a_format, "%{F#FF0000}");
 
 	if(strlen(occupied_format) == 0)
 		strcpy(occupied_format, free_format);
@@ -119,6 +119,15 @@ tile *process_args(int argc, char *argv[], unsigned int *size)
 	return tile_array;
 }
 
+void print_tile_array(const tile *tile_array, unsigned int size)
+{
+	for(unsigned int i = 0; i < size; ++i)
+		printf("%%{%c}%s", tile_array[i].pos, tile_array[i].str);
+
+	printf("\n");
+	fflush(stdout);
+}
+
 int main(int argc, char *argv[])
 {
 	unsigned int tile_array_size;
@@ -133,11 +142,10 @@ int main(int argc, char *argv[])
 	char buf[BUF_SIZE];
 	int bytes_read;
 	while((bytes_read = read(fd, buf, BUF_SIZE - 1)) > 0) {
-		buf[bytes_read] = 0;
+		buf[bytes_read - 1] = 0; //cut down newline
 		update_tile_array(tile_array, tile_array_size, buf);
 
-		if(tile_array[0].str)
-			printf("%s\n", tile_array[0].str);
+		print_tile_array(tile_array, tile_array_size);
 	}
 
 	free_tile_array(tile_array, tile_array_size);

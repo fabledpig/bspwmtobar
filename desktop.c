@@ -123,6 +123,9 @@ char *desktop_array_to_string(desktop *desktop_array, unsigned int size)
 		const char *format = select_format(desktop_array[i].status);
 		sprintf(tmp, "%s%s%%{F-}%%{B-}%%{U-}%%{T-}%%{-u}%%{-o}", format, desktop_array[i].name); //reset every formatting that may have happened
 		strcat(str, tmp);
+
+		if(i < size - 1)
+			strcat(str, " ");
 	}
 
 	return str;
