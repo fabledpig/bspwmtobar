@@ -15,6 +15,13 @@ prefix: a unique identifier that is expected before every line of formatted inpu
  - expected format: "prefix:%s"
 ```
 
+bspwmtobar creates /tmp/bspwmtobar-fifo when it starts. That's where you are supposed to redirect the programs' output you want to print to lemonbar. For example:
+```
+bspc subscribe > /tmp/bspwmtobar-fifo
+xtitle -sf "xtitle:%s" > /tmp/bspwmtobar-fifo #notice the "xtitle" prefix
+conky > /tmp/bspwmtobar-fifo #conky prints every line starting with "conky:"
+```
+
 ```
 format_argument can be --occupied, --occupied-active, --free, free-active, --urgent, --urgent-active
  - format_arguments resemble desktop states defined by bspwm
@@ -22,6 +29,11 @@ format_argument can be --occupied, --occupied-active, --free, free-active, --urg
 format is expected in lemonbar's formatting style (only the opening of the formatting syntax, closing is done automatically, for example %{F-} etc.).
 
 Make sure to define a format for --free and --free-active at least.
+```
+
+## Installation
+```
+sudo make install
 ```
 
 ## Example
