@@ -41,7 +41,9 @@ void sort_tile_array(tile *tile_array, unsigned int size)
 
 tile create_tile(const char *prefix, char pos)
 {
-	tile t = {.prefix = prefix, .str = NULL, .pos = pos};
+	tile t = {.prefix = prefix, .pos = pos};
+	t.str = malloc(1);
+	strcpy(t.str, "");
 
 	return t;
 }
@@ -71,8 +73,7 @@ void update_tile_array(tile *tile_array, unsigned int size, const char *fifo_out
 	int found = 0;
 	for(unsigned int i = 0; i < size; ++i) {
 		if(!strcmp(tile_array[i].prefix, prefix)) {
-			if(tile_array[i].str)
-				free(tile_array[i].str);
+			free(tile_array[i].str);
 
 			found = 1;
 			tile_array[i].str = str;
