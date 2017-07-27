@@ -2,7 +2,7 @@
 
 trap "kill 0" SIGINT
 
-bspwmtobar -l x -c W -r c --free "%{F#FFFFFF}" --free-active "%{F#FF0000}" --occupied "%{F#999999}" | lemonbar -g -b 1920x30 -f &
+bspwmtobar -l xtitle -c W -r conky --free "%{F#FFFFFF}" --free-active "%{F#FF0000}" --occupied "%{F#999999}" | lemonbar -g -b 1920x30 -f &
 
 bspc subscribe report > /tmp/bspwmtobar-fifo &
 conky > /tmp/bspwmtobar-fifo &
