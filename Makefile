@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -std=c99 -Wall
+CFLAGS = -O3 -std=c99 -Wall
 
 bspwmtobar: bspwmtobar.o desktop.o tile.o
 	$(CC) $(CFLAGS) bspwmtobar.o desktop.o tile.o -o bspwmtobar
