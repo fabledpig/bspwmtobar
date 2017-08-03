@@ -113,7 +113,7 @@ const char *select_format(char status)
 	return occupied_format;
 }
 
-char *desktop_array_to_string(desktop *desktop_array, unsigned int size)
+char *desktop_array_to_string(const desktop *desktop_array, unsigned int size)
 {
 	char *str = malloc(DESKTOP_SIZE);
 	str[0] = 0;
