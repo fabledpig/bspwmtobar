@@ -10,7 +10,7 @@ static desktop *desktop_array = NULL;
 static unsigned int desktop_array_size = 0;
 
 //returns true if t1 should be aligned before t2
-int align_left(tile t1, tile t2)
+static int align_left(tile t1, tile t2)
 {
 	if(t1.pos == t2.pos)
 		return 0;

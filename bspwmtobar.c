@@ -26,7 +26,7 @@ char occupied_format[FORMAT_LENGTH], occupied_a_format[FORMAT_LENGTH],
 			free_format[FORMAT_LENGTH], free_a_format[FORMAT_LENGTH],
 			urgent_format[FORMAT_LENGTH], urgent_a_format[FORMAT_LENGTH];
 
-arg_type get_arg_type(const char *argv)
+static arg_type get_arg_type(const char *argv)
 {
 	if(!strcmp(argv, ALIGN_LEFT_ARG) ||
 			!strcmp(argv, ALIGN_CENTER_ARG)  || !strcmp(argv, ALIGN_RIGHT_ARG))
@@ -43,7 +43,7 @@ arg_type get_arg_type(const char *argv)
 	return MISC;
 }
 
-unsigned int count_necessary_tiles(int argc, char *argv[])
+static unsigned int count_necessary_tiles(int argc, char *argv[])
 {
 	unsigned int cnt = 0;
 
@@ -58,7 +58,7 @@ unsigned int count_necessary_tiles(int argc, char *argv[])
 	return cnt;
 }
 
-void process_format_arg(const char *format_type, const char *format)
+static void process_format_arg(const char *format_type, const char *format)
 {
 	if(!strcmp(format_type, OC_ARG))
 		strcpy(occupied_format, format);
@@ -74,7 +74,7 @@ void process_format_arg(const char *format_type, const char *format)
 		strcpy(urgent_a_format, format);
 }
 
-void set_empty_format_args(void)
+static void set_empty_format_args(void)
 {
 	if(strlen(free_format) == 0)
 		strcpy(free_format, "%{F#FFFFFF}");
@@ -91,7 +91,7 @@ void set_empty_format_args(void)
 		strcpy(urgent_a_format, free_a_format);
 }
 
-tile *process_args(int argc, char *argv[], unsigned int *size)
+static tile *process_args(int argc, char *argv[], unsigned int *size)
 {
 	*size = count_necessary_tiles(argc, argv);
 	tile *tile_array = malloc(sizeof(tile) * *size);
@@ -119,7 +119,7 @@ tile *process_args(int argc, char *argv[], unsigned int *size)
 	return tile_array;
 }
 
-void print_tile_array(const tile *tile_array, unsigned int size)
+static void print_tile_array(const tile *tile_array, unsigned int size)
 {
 	for(unsigned int i = 0; i < size; ++i)
 		printf("%%{%c}%s", tile_array[i].pos, tile_array[i].str);

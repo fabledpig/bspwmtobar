@@ -7,7 +7,11 @@
 #define DESKTOP_SIZE 1024
 #define DESKTOP_BUF_SIZE 128
 
-unsigned int count_desktops(const char *bspwm_output)
+static char **get_desktop_info(const char *bspwm_output);
+
+static desktop create_desktop(const char *desktop_info);
+
+static unsigned int count_desktops(const char *bspwm_output)
 {
 	const char *types = "OoFfUu"; //desktop type specifiers
 
@@ -48,7 +52,7 @@ void build_desktop_array(const char *bspwm_output, desktop **desktop_array, unsi
 	free(desktop_info);
 }
 
-char **get_desktop_info(const char *bspwm_output)
+static char **get_desktop_info(const char *bspwm_output)
 {
 	unsigned int num_of_desktops = count_desktops(bspwm_output);
 	char **desktop_info = malloc(sizeof(char *) * num_of_desktops);
@@ -69,7 +73,7 @@ char **get_desktop_info(const char *bspwm_output)
 	return desktop_info;
 }
 
-desktop create_desktop(const char *desktop_info)
+static desktop create_desktop(const char *desktop_info)
 {
 	desktop d;
 	d.status = desktop_info[0];
